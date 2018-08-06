@@ -23,7 +23,6 @@ package-lock.json
 # User-specific stuff:
 .idea/*
 /.vscode
-/.editorconfig
 
 # Bower dependency directory (https://bower.io/)
 bower_components
