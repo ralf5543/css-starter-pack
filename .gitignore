@@ -15,7 +15,7 @@ node_modules
 package-lock.json
 
 # Ignore public files
-public
+# public
 
 # IDEs
 .idea
