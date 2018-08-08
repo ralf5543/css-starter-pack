@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,67 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  Hello
 
-  <script src="bundle.js"></script>
+  <h1>Starter pack CSS</h1>
+
+  <p>Pour l'installation des outils mentionnés dans ce starter, il est supposé que le bundler <a href="https://webpack.js.org/" title="Webpack url">Webpack</a> est déjà installé.
+    Si ce n'est pas le cas, d'autres alternatives existent, aussi bien pour les outils utilisés que pour leur installation.</p>
+
+  <h2>Les outils</h2>
+
+  <h3>Sass</h3>
+  <p>Le préprocesseur <a href="https://sass-lang.com/" title="sass url">Sass</a> sera utilisé systématiquement, et ce encore longtemps, pour combler les limites parfois frustrantes du langage CSS.</p>
+  <p>Même si l'évolution de ce dernier est lente, elle est réelle, et on prendra garde à ne plus utiliser sass lorsque le CSS natif suffit.</p>
+
+  <h3>PostCSS</h3>
+  <p><a href="https://postcss.org/" title="PostCSS website">PostCSS</a> modifie les styles avec une couche de JS. Il nécessite des plugins, dont l'intéret de chacun dépendra du projet.</p>
+  <p>Attention de ne pas ajouter un plugin pour des fonctionnalités déjà présentes via Sass. Pour les plus complémentaires :</p>
+  <ul>
+    <li><a href="https://github.com/postcss/autoprefixer" title="autoprefixer url">autoprefixer</a> : ajoute des préfixes vendeurs aux propriétés CSS qui en ont besoin (se base sur les rapports de
+      <a href="https://caniuse.com/#info_about" title="Can I use url">Can I use).</a>
+    </li>
+    <li><a href="https://github.com/postcss/postcss-custom-media" title="PostCSS Custom Media url">PostCSS Custom Media</a> : utilisation de variables pour les media-queries.</li>
+    <li><a href="https://preset-env.cssdb.org/" title="postcss-preset-env url">postcss-preset-env</a> (anciennement postcss-cssnext) :
+      grosse boîte à outils (dont est d'ailleurs extrait PostCSS Custom Media). En extraire que ce qui semble utile au projet.</li>
+  </ul>
+
+  <h2>Reset CSS</h2>
+  <p>Le but premier des fichiers de reset CSS était d'uniformiser les styles par défaut des navigateurs.</p>
+  <p>Ceux-ci étant de plus en plus similaires, on les utilise surtout comme des déclarations globales, qui vont rendre nos éléments plus rapides à coder, plus maintenables, et davantage conformes aux bonnes pratiques.</p>
+
+  <h3><a href="https://meyerweb.com/eric/tools/css/reset/reset.css" title="Eric Meyer website">Reset css</a> d'Eric Meyer.</h3>
+  <h4>La manière brutale</h4>
+  <p>On uniformise en mettant tout à zéro.</p>
+  <p>Avantages : on se déleste de tous les styles parasites, comme les marges internes sur les listes.</p>
+  <p>Inconvénients : il n'y a plus de style par défaut, tout élément présent sur le projet doit être travaillé.</p>
+
+  <h3><a href="http://necolas.github.io/normalize.css/" title="Normalize website">Normalize</a></h3>
+  <h4>La manière douce</h4>
+  <p>On préserve la majorité des styles par défaut, en les uniformisant si besoin.</p>
+  <p>Avantages : le site est rapidement présentable.</p>
+  <p>Inconvénients : tous les éléments auront des styles par défaut, lesquels seront forcément différents de ceux requis par son projet.
+    Le risque est plus grand d'oublier de styler un élément mais si c'est le cas, le résultat sera moins choquant qu'avec le reset de Meyer.</p>
+
+  <h3>Reboot</h3>
+  <h4>La manière intelligente</h4>
+  <p>On uniformise les styles par défaut des navigateurs, et on en ajoute de nouveaux.</p>
+  <p><a href="https://github.com/twbs/bootstrap/blob/v4-dev/scss/_reboot.scss" title="">Reboot</a> est un concept Bootstrap, mais rien n'empêche de s'en inspirer.
+  Il reprend les fondamentaux de <a href="http://necolas.github.io/normalize.css/" title="Normalize website">Normalize</a>, en personnalisant certains éléments (ajout de la gestion du
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing">box-sizing</a>, etc), et en remettant à zéro certaines propriétés CSS (margin-top des titres), comme le reset CSS originel.</p>
+
+  <h2>Règles globales</h2>
+
+  <h3>Mobile First</h3>
+  <p>Pour des raisons essentielles de performances, le code CSS ciblera en priorité la version mobile du site.
+    Les media-queries ne seront utilisées que pour les versions plus larges (tablette, desktop...).</p>
+
+  <h3>Structure en flexbox</h3>
+  <p>En attendant une reconnaissance complète des <a href="https://caniuse.com/#feat=css-grid" title="caniuse url">Grilles CSS</a>, une mise en page en
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/Disposition_flexbox_CSS/Utilisation_des_flexbox_en_CSS" title="Flexbox doc"></a>Flexbox reste
+    la plus solide, et la plus à même des gérer de façon responsive les pieds-de-page.</p>
+  <pre><code><p>xv;lmvklxmcvxv</p></code></pre>
+
+<script src="bundle.js"></script>
+
 </body>
 </html>
