@@ -3,7 +3,6 @@ const path = require("path");
 const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssets = require("optimize-css-assets-webpack-plugin");
-const highlightPlugin = require("highlight.js");
 
 let config = {
   entry: "./src/index.js",
@@ -27,7 +26,6 @@ let config = {
     },
     plugins: [
       new ExtractTextWebpackPlugin("styles.css"),
-      new highlightPlugin()
     ],
     devServer: {
       contentBase: path.resolve(__dirname, "./public"),
