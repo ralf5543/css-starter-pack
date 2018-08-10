@@ -1,0 +1,23 @@
+@font-face {
+	font-family: "myIconFont";
+	src: url("../assets/fonts/myIconFont.woff2?997dcc7dee043493bc0445ab2c98ba68") format("woff2"),
+url("../assets/fonts/myIconFont.woff?997dcc7dee043493bc0445ab2c98ba68") format("woff");
+}
+
+.icon {
+	line-height: 1;
+}
+
+.icon:before {
+	font-family: myIconFont !important;
+	font-style: normal;
+	font-weight: normal !important;
+	vertical-align: top;
+}
+
+.icon-apple:before {
+	content: "\f101";
+}
+.icon-city:before {
+	content: "\f102";
+}
