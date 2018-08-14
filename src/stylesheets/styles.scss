@@ -1,6 +1,12 @@
+@import "variables/variables";
+@import "mixins/mixins";
+@import "fonts";
 
 @import 'base';
 @import 'main';
+@import 'exemples';
 
 @import '../vendors/webFontsGenerator';
 @import '../../node_modules/highlight.js/styles/default';
+
+

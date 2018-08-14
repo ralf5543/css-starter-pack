@@ -1,0 +1,16 @@
+/* Gives a block a width of 100% of the viewport, bringing it out of its container */
+
+@mixin fullWidth {
+  width: 100vw;
+  max-width: var(--size-full-screen);
+  position: relative;
+  left: 50%;
+  margin-left: -50vw; /* stylelint-disable-line declaration-property-unit-whitelist */
+  margin-right: -50vw; /* stylelint-disable-line declaration-property-unit-whitelist */
+
+  > * {
+    max-width: var(--size-desktop-screen);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

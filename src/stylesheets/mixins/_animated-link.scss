@@ -1,0 +1,43 @@
+@mixin animated-link($color: inherit, $padding: 0, $focus: false) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: $padding;
+    width: 0;
+    height: 1px; /* stylelint-disable-line declaration-property-unit-whitelist */
+    transition: .2s all;
+    background-color: $color;
+    content: '';
+  }
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    //only ie10+ will understand those rules
+    &::after {
+      transition: none;
+    }
+  }
+
+  @if $focus == false {
+    $focus: '&:hover';
+  }
+
+  @else {
+    $focus: '&:focus, &:hover';
+  }
+
+  #{$focus} {
+    &::after {
+      @if (unitless($padding)) {
+        width: 100%;
+      }
+
+      @else {
+        width: calc(100% - (#{$padding} * 2));
+      }
+      // but no transition on ie11 with calc...
+      // When animation is really needed, replace paddings of the link with margins
+    }
+  }
+}

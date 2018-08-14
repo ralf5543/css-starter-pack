@@ -1,0 +1,28 @@
+//adds left and right margins to a block, first child of the main content
+@mixin block-layout-horizontal {
+  margin-right: $space-s;
+  margin-left: $space-s;
+
+  @media (--tablet) {
+    margin-right: $space-m;
+    margin-left: $space-m;
+  }
+
+  @media (--desktop) {
+    margin-right: $space-l;
+    margin-left: $space-l;
+  }
+}
+
+//add bottom margin to any block in the main flow
+@mixin block-layout-vertical {
+  margin-bottom: $space-m;
+
+  @media (--tablet) {
+    margin-bottom: $space-l;
+  }
+
+  @media (--desktop) {
+    margin-bottom: $space-xl;
+  }
+}

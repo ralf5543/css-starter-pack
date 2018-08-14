@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<main>
+
   <h1>Starter pack CSS</h1>
 
   <p>Pour l'installation des outils mentionnés dans ce starter, il est supposé que le bundler <a href="https://webpack.js.org/" title="Webpack url">Webpack</a> est déjà installé.
@@ -564,7 +566,295 @@ webfontsGenerator({
   <span class="icon icon-apple">Mon icone</span>
   <p>L'icone est générée dans le pseudeo-element <em>before</em>.</p>
 
-  <h2>Gestion des espaces blancs</h2>
+  <h2 id="#spaces">Gestion des espaces blancs</h2>
+  <p>Toutes les marges et paddings du site utiliseront des variables prédefinies</p>
+  <p>On peut utiliser n'importe quelles valeurs approuvées par la charte, mais l'idée est de respecter est de créer une progression régulière entre elles.</p>
+  <p>Exemple :</p>
+  <pre>
+    <code>
+$space-xs: 4px;
+$space-s: 8px;
+$space-m: 16px;
+$space-l: 32px;
+$space-xl: 64px;
+    </code>
+  </pre>
+
+  <h2>Marges verticales</h2>
+  <p>Dans la mesure du possible, pour rendre l'espacement entre les blocs plus homogène et éviter des fusions de marges, les propriétés
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/margin-top" title="Définition margin-top">margin-top</a></p> seront évitées, et redéfinies à zéro si elles sont présenets par défaut (titles..).
+
+  <h2>Gestion des z-index</h2>
+  <p>Pour gérer un maximum de cas de figures avec le minimum de risques, sans tomber dans la surenchère des nombres, on utilisera des palliers de variables explicites.</p>
+  <p>Exemple :</p>
+  <ul>
+    <li>$loader: 30;</li>
+    <li>$cookies: 25;</li>
+    <li>$modals: 20;</li>
+    <li>$header: 15;</li>
+    <li>$tooltips: 10;</li>
+  </ul>
+  <p>Ainsi, lorsqu'on souhaite qu'un élément en absolu se positionne toujours au dessus du header, mais en dessous des modals, on peut lui attribuer :</p>
+  <pre>
+    <code>
+      z-index: $header + 1;
+    </code>
+  </pre>
+
+  <h2>Mixins génériques</h2>
+  <p>Bibliothèque de mixins utiles.</p>
+
+  <h3>Elément invisible mais accessible :</h3>
+  <pre>
+    <code>
+/**
+ * Hides wording while keeping it accessible
+ */
+@mixin accessible-invisibility {
+  position: absolute !important;
+  width: 1px;
+  height: 1px; /* stylelint-disable-line declaration-property-unit-whitelist */
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+    </code>
+  </pre>
+
+  <h3>Elément en position absolue centré :</h3>
+  <pre>
+    <code>
+@mixin center-horizontally {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin center-vertically {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin center-both {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+    </code>
+  </pre>
+
+  <h3>Grille de blocs équidistants :</h3>
+  <pre>
+    <code>
+/**
+ * Creates a grid with elements equally positionned horizontaly and vertically
+ * Declare the number of elements by line, and the size of the margin between each one
+ * It must be displayed in flexbox
+ */
+@mixin grid($number, $margin) {
+  margin-right: -$margin;
+
+  > * {
+    width: calc((100% / #{$number}) - (#{$margin}));
+    margin: 0 $margin $margin 0;
+  }
+}
+
+    </code>
+  </pre>
+
+  <h3>Lien animé :</h3>
+<pre>
+  <code>
+@mixin animated-link($color: inherit, $padding: 0, $focus: false) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: $padding;
+    width: 0;
+    height: 1px; /* stylelint-disable-line declaration-property-unit-whitelist */
+    transition: .2s all;
+    background-color: $color;
+    content: '';
+  }
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    //only ie10+ will understand those rules
+    &::after {
+      transition: none;
+    }
+  }
+
+  @if $focus == false {
+    $focus: '&:hover';
+  }
+
+  @else {
+    $focus: '&:focus, &:hover';
+  }
+
+  #{$focus} {
+    &::after {
+      @if (unitless($padding)) {
+        width: 100%;
+      }
+
+      @else {
+        width: calc(100% - (#{$padding} * 2));
+      }
+      // but no transition on ie11 with calc...
+      // When animation is really needed, replace paddings of the link with margins
+    }
+  }
+}
+  </code>
+</pre>
+
+  <a class="animatedLink" href="#">Mon lien animé</a>
+
+  <h3>Elément prenant 100% de largeur du navigateur (dans un contexte plus étroit) :</h3>
+  <pre>
+    <code>
+/* Gives a block a width of 100% of the viewport, bringing it out of its container */
+
+@mixin fullWidth {
+  $size-desktop-screen: 1280px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw; /* stylelint-disable-line declaration-property-unit-whitelist */
+  margin-right: -50vw; /* stylelint-disable-line declaration-property-unit-whitelist */
+
+  > * {
+    max-width: $size-desktop-screen;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+    </code>
+  </pre>
+
+  <h3>Eléments en cercle :</h3>
+  <pre>
+    <code>
+/// Mixin to place items on a circle
+/// @author Hugo Giraudel
+/// @author Ana Tudor
+/// @param {Integer} $item-count - Number of items on the circle
+/// @param {Length} $circle-size - Large circle size
+/// @param {Length} $item-size - Single item size
+@mixin on-circle($item-count, $circle-size, $item-size) {
+  position: relative;
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+
+  > * {
+    display: block;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin: -($item-size / 2);
+
+    $angle: (360 / $item-count);
+    $rot: 0;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform:
+          rotate($rot * 1deg)
+          translate($circle-size / 2)
+          rotate($rot * -1deg);
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+    </code>
+  </pre>
+
+  <h2>Mixins spécifiques</h2>
+  <p>Les mixins ne sont pas seulement utiles pour s'épargner des répétitions de code, mais aussi pour s'assurer l'homogénéité des éléments semblables.</p>
+  <p>Ci-dessous quelques exemples. ne pas hésiter à en créer d'autres en fonction des besoins, dès qu'un détail graphique est répété.</p>
+  <h3>Marges entre les blocs :</h3>
+  <pre>
+    <code>
+//adds left and right margins to a block, first child of the main content
+@mixin block-layout-horizontal {
+  margin-right: $space-s;
+  margin-left: $space-s;
+
+  @media (--tablet) {
+    margin-right: $space-m;
+    margin-left: $space-m;
+  }
+
+ @media (--desktop) {
+    margin-right: $space-l;
+    margin-left: $space-l;
+  }
+}
+
+//add bottom margin to any block in the main flow
+@mixin block-layout-vertical {
+  margin-bottom: $space-m;
+
+  @media (--tablet) {
+    margin-bottom: $space-l;
+  }
+
+  @media (--desktop) {
+    margin-bottom: $space-xl;
+  }
+}
+    </code>
+  </pre>
+
+  <h3>Ombres :</h3>
+  <pre>
+    <code>
+/**
+ * adds shadow on top edge of a block
+ */
+@mixin block-shadow {
+  box-shadow: 0 4px * -1 8px 0 grey;
+}
+
+/**
+* add dark shadow blur to the block
+*/
+@mixin block-shadow-dark {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+
+/**
+* add shadow on bottom edges of a block
+*/
+@mixin block-shadow-bottom {
+  box-shadow: 0 0 8px 0 grey;
+}
+
+/**
+* add shadow on every edge
+*/
+@mixin block-shadow-box {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
+}
+
+    </code>
+  </pre>
+
+</main>
 
 <script src="bundle.js"></script>
 

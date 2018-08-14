@@ -1,0 +1,21 @@
+$mainFont-font-face: 'roboto';
+
+$mainFont: $mainFont-font-face, Arial, sans-serif;
+
+
+/* =================----------------- Roboto -----------------================= */
+
+// Roboto regular
+@font-face {
+  font-family: $mainFont-font-face;
+  src: url("../assets/fonts/roboto-v18-latin-regular.woff") format("woff"),
+  url("../assets/fonts/roboto-v18-latin-regular.woff2") format("woff2");
+}
+
+// Roboto bold
+@font-face {
+  font-family: $mainFont-font-face;
+  font-weight: bold;
+  src: url("../assets/fonts/roboto-v18-latin-900.woff") format("woff"),
+  url("../assets/fonts/roboto-v18-latin-900.woff2") format("woff2");
+}

@@ -1,0 +1,9 @@
+/**
+ * Sizes
+ * All variables here should be prefixed with "--size-"
+ */
+
+
+@custom-media --mobile (max-width: 380px);
+@custom-media --tablet (max-width: 990px);
+@custom-media --desktop (min-width: 991px);
