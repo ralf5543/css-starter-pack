@@ -39,7 +39,7 @@ let config = {
         test: /\.scss$/,
         use: ['css-hot-loader'].concat(ExtractTextWebpackPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader', 'postcss-loader'],
+          use: ['css-loader', 'postcss-loader', 'sass-loader'],
         })),
       },
         {
