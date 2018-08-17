@@ -52,12 +52,17 @@ let config = {
                 mimetype: 'application/font-woff',
                 name: 'assets/fonts/[hash].[ext]'
               }
-            }
+            },
           ]
         }]
     },
     plugins: [
       new ExtractTextWebpackPlugin("styles.css"),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
+      }),
     ],
     devServer: {
       contentBase: path.resolve(__dirname, "./public"),

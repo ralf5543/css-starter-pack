@@ -1,0 +1,14 @@
+/**
+ * Creates a grid with elements equally positionned horizontaly and vertically
+ * Declare the number of elements by line, and the size of the margin between each one
+ */
+@mixin grid($number, $margin) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$margin;
+
+  > * {
+    width: calc((100% / #{$number}) - (#{$margin}));
+    margin: 0 $margin $margin 0;
+  }
+}

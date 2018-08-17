@@ -4,12 +4,146 @@ body {
   font-family: $mainFont;
 }
 
+main {
+  padding: 0 $space-s;
+  color: $mainColor;
+  backdrop-filter: blur();
+
+  @media (--tablet) {
+    padding: 0 $space-m;
+  }
+
+  @media (--desktop) {
+    padding: 0 $space-l;
+  }
+}
+
+header {
+  @include fullWidth;
+
+  margin-bottom: $space-m;
+  background-color: $thirdColor;
+
+  > div {
+    padding: 0 $space-m;
+
+    @media (--tablet) {
+      margin-bottom: $space-l;
+      padding: 0 $space-m + $space-s;
+    }
+
+    @media (--desktop) {
+      margin-bottom: $space-xl;
+      padding: 0 $space-l + 7px;// scrollbar width
+    }
+  }
+}
+
+h1 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0 $space-m;
+  font-family: $secondaryFont;
+  font-size: 3rem;
+  font-weight: normal;
+  background-color: white;
+  text-shadow: -4px 0 white, 0 4px white, 4px 0 white, 0 -4px white;
+
+  span {
+    position: relative;
+  }
+
+  @media (--tablet) {
+    font-size: 4rem;
+
+    &::before {
+      @include center-vertically;
+
+      content: '';
+      left: $space-m;
+      right: $space-m;
+      margin-top: 16px;
+      height: 1px;
+      background-color: $mainColor;
+    }
+  }
+
+  @media (--desktop) {
+    font-size: 5rem;
+
+    &::before {
+      margin-top: 22px;
+    }
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-bottom: 1px solid #00bde2;
+  margin-bottom: $space-m;
+  margin-top: $space-xl;
+  padding-bottom: $space-s;
+
+  @media (--tablet) {
+    font-size: 3rem;
+    padding-bottom: $space-s;
+  }
+}
+
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: $space-s;
+  padding-left: $space-m;
+}
+
+h4 {
+  font-size: 1.4rem;
+  margin-bottom: $space-s;
+  padding-left: $space-m;
+}
+
 p {
   margin-bottom: $space-m;
   font-size: 1.4rem;
 }
 
-[class*='Icon_']::before {
+ul {
+  padding-left: $space-l;
+}
+
+li {
+  position: relative;
+  margin-bottom: $space-s;
+  font-size: 1.4rem;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: -19px;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    background-color: $secondaryColor;
+  }
+}
+
+a {
+  @include animated-link($secondaryColor);
+
+  color: $secondaryColor;
+}
+
+code.hljs {
+  margin: 0 $space-m;
+  padding: 0 $space-m;
+  font-size: 1.2rem;
+}
+
+[class*='icon-']::before {
   font-family: myIconFont;
   font-style: normal;
   font-weight: normal;

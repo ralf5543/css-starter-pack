@@ -1,4 +1,4 @@
-@mixin animated-link($color: inherit, $padding: 0, $focus: false) {
+@mixin animated-link($color: black, $padding: 0, $focus: false) {
   position: relative;
 
   &::after {

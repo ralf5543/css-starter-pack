@@ -1,3 +1,64 @@
+.u-exemple {
+  border: 1px dotted $mainColor;
+  margin: 0 auto $space-xl;
+
+  li::before {
+    content: none;
+  }
+}
+
+.animatedLink__wrapper {
+  padding: $space-m;
+  text-align: center;
+}
+
 .animatedLink {
   @include animated-link(orange);
+
+  display: inline-block;
+}
+
+.centerContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.centerContent {
+  @include center-both;
+
+  width: 50px;
+  height: 50px;
+  background-color: $thirdColor;
+}
+
+.grid {
+  @include grid(4, $space-l);
+
+  width: 100%;
+  margin-right: 0;
+
+  li {
+    display: inline-block;
+    height: 50px;
+    background-color: $thirdColor;
+  }
+}
+
+.fullWidth {
+  @include fullWidth;
+
+  div {
+    height: 50px;
+    background-color: $thirdColor;
+  }
+}
+
+.circle {
+  @include on-circle(8, 300px, 32px);
+
+  li {
+    height: 32px;
+    background-color: $thirdColor;
+  }
 }
