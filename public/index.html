@@ -9,15 +9,15 @@
 </head>
 <body>
 
-<main>
+<header>
+  <div>
+    <h1>
+      <span>Starter pack CSS</span>
+    </h1>
+  </div>
+</header>
 
-  <header>
-    <div>
-      <h1>
-        <span>Starter pack CSS</span>
-      </h1>
-    </div>
-  </header>
+<main>
 
   <p>Pour l'installation des outils mentionnés dans ce starter, il est supposé que le bundler <a href="https://webpack.js.org/" title="Webpack url">Webpack</a> est déjà installé.
     Si ce n'est pas le cas, d'autres alternatives existent, aussi bien pour les outils utilisés que pour leur installation.</p>
@@ -578,7 +578,7 @@ webfontsGenerator({
   </pre>
   <p>avec pour résultat :</p>
   <p class="icon-apple">Mon icone</p>
-  <p>L'icone est générée dans le pseudeo-element <em>before</em>.</p>
+  <p>L'icone est générée dans le pseudo-element <a href="https://developer.mozilla.org/fr/docs/Web/CSS/::before" title="description of befoe pseudo-element">before</a>.</p>
 
   <h2 id="#spaces">Gestion des espaces blancs</h2>
   <p>Toutes les marges et paddings du site utiliseront des variables prédéfinies.</p>
@@ -599,7 +599,7 @@ $space-xl: 64px;
     <a href="https://developer.mozilla.org/fr/docs/Web/CSS/margin-top" title="Définition margin-top">margin-top</a> seront évitées, et redéfinies à zéro si elles sont présentes par défaut (titles..).</p>
 
   <h2>Gestion des z-index</h2>
-  <p>Pour gérer un maximum de cas de figures avec le minimum de risques, sans tomber dans la surenchère des nombres, on utilisera des palliers de variables explicites.</p>
+  <p>Pour gérer un maximum de cas de figures avec le minimum de risques, sans tomber dans la surenchère des valeurs, on utilisera des palliers de variables explicites.</p>
   <p>Exemple :</p>
   <ul>
     <li>$loader: 30;</li>
@@ -834,7 +834,7 @@ $space-xl: 64px;
 
   <h2>Mixins spécifiques</h2>
   <p>Les mixins ne sont pas seulement utiles pour s'épargner des répétitions de code, mais aussi pour s'assurer l'homogénéité des éléments semblables.</p>
-  <p>Ci-dessous quelques exemples. ne pas hésiter à en créer d'autres en fonction des besoins, dès qu'un détail graphique est répété.</p>
+  <p>Ci-dessous quelques exemples. Ne pas hésiter à en créer d'autres en fonction des besoins, dès qu'un détail graphique est répété.</p>
   <h3>Marges entre les blocs :</h3>
   <pre>
     <code>

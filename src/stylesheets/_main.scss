@@ -1,13 +1,15 @@
 body {
-  max-width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   font-family: $mainFont;
+  overflow-x: hidden;
 }
 
 main {
+  width: 100%;
+  max-width: $size-desktop;
+  margin: 0 auto;
   padding: 0 $space-s;
   color: $mainColor;
-  backdrop-filter: blur();
 
   @media (--tablet) {
     padding: 0 $space-m;
@@ -19,22 +21,29 @@ main {
 }
 
 header {
-  @include fullWidth;
-
-  margin-bottom: $space-m;
+  width: 100%;
+  margin: 0 auto $space-m;
+  padding: 0 $space-s;
   background-color: $thirdColor;
 
+  @media (--tablet) {
+    margin: 0 auto $space-l;
+  }
+
+  @media (--desktop) {
+    margin: 0 auto $space-xl;
+  }
+
   > div {
-    padding: 0 $space-m;
+    max-width: $size-desktop;
+    margin: 0 auto;
 
     @media (--tablet) {
-      margin-bottom: $space-l;
-      padding: 0 $space-m + $space-s;
+      padding: 0 $space-m;
     }
 
     @media (--desktop) {
-      margin-bottom: $space-xl;
-      padding: 0 $space-l + 7px;// scrollbar width
+      padding: 0 $space-l;
     }
   }
 }
@@ -135,6 +144,27 @@ a {
   @include animated-link($secondaryColor);
 
   color: $secondaryColor;
+}
+
+button {
+  @include block-layout-vertical;
+
+  width: 100%;
+  margin-left: 0;
+  padding: $space-m;
+  color: white;
+  background-color: $secondaryColor;
+  font-size: 1.4rem;
+  transition: margin-left .2s;
+
+  @media (--tablet) {
+    width: auto;
+
+    &:hover,
+    &:focus {
+      margin-left: $space-l;
+    }
+  }
 }
 
 code.hljs {
