@@ -1,11 +1,24 @@
 image: ekino/docker-buildbox:node8.6-2017.11.01
 
-pages:
-  stage: deploy
+stages:
+  - build
+  - deploy
+
+build_site:
+  stage: build
   artifacts:
     paths:
       - public
+    expire_in: 1 week
   script:
-    - echo "Script cannot be empty ;)"
+    - npm install
+    - npm run prod
+
+deploy_site:
+  stage: deploy
+  dependencies:
+    - build_site
   only:
     - master
+  script:
+    - echo "Script cannot be empty ;)"
