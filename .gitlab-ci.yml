@@ -1,0 +1,11 @@
+image: ekino/docker-buildbox:node8.6-2017.11.01
+
+pages:
+  stage: deploy
+  artifacts:
+    paths:
+      - public
+  script:
+    - echo "Script cannot be empty ;)"
+  only:
+    - master
