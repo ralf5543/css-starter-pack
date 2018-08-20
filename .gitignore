@@ -17,7 +17,7 @@ package-lock.json
 # Ignore public files
 # public
 public/bundle.js
-public/style.css
+public/styles.css
 
 # IDEs
 .idea
