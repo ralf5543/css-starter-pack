@@ -150,19 +150,18 @@ button {
   @include block-layout-vertical;
 
   width: 100%;
-  margin-left: 0;
   padding: $space-m;
   color: white;
   background-color: $secondaryColor;
   font-size: 1.4rem;
-  transition: margin-left .2s;
+  transition: all .2s;
 
   @media (--tablet) {
     width: auto;
 
     &:hover,
     &:focus {
-      margin-left: $space-l;
+      background-color: darken($secondaryColor, 10%);
     }
   }
 }
