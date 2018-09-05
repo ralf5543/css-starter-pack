@@ -9,7 +9,6 @@ build_site:
   artifacts:
     paths:
       - public
-    expire_in: 1 week
   script:
     - npm install
     - npm run prod
