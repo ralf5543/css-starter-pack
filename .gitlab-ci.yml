@@ -17,6 +17,9 @@ deploy_site:
   stage: deploy
   dependencies:
     - build_site
+  artifacts:
+    paths:
+      - public
   only:
     - master
   script:
