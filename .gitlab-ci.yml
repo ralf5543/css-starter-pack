@@ -8,7 +8,7 @@ build_site:
   stage: build
   artifacts:
     paths:
-      - public
+      - public/
   script:
     - npm install
     - npm run prod
@@ -17,9 +17,6 @@ deploy_site:
   stage: deploy
   dependencies:
     - build_site
-  artifacts:
-    paths:
-      - public
   only:
     - master
   script:
