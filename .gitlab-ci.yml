@@ -6,12 +6,12 @@ stages:
 
 build_site:
   stage: build
-  artifacts:
-    paths:
-      - public/
   script:
     - npm install
     - npm run prod
+  artifacts:
+    paths:
+      - public
 
 deploy_site:
   stage: deploy
@@ -20,4 +20,9 @@ deploy_site:
   only:
     - master
   script:
-    - echo "Script cannot be empty ;)"
+    - mkdir .public
+    - cp -r * .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
