@@ -13,7 +13,7 @@ build_site:
     paths:
       - public
 
-deploy_site:
+pages:
   stage: deploy
   dependencies:
     - build_site
