@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="public/styles.css">
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>
+      <span>Starter pack CSS</span>
+    </h1>
+  </div>
+</header>
+
+<main>
+
+  <p>Pour l'installation des outils mentionnés dans ce starter, il est supposé que le bundler <a href="https://webpack.js.org/" title="Webpack url">Webpack</a> est déjà installé.
+    Si ce n'est pas le cas, d'autres alternatives existent, aussi bien pour les outils utilisés que pour leur installation.</p>
+
+  <h2>Les outils</h2>
+
+  <h3>Sass</h3>
+  <p>Le préprocesseur <a href="https://sass-lang.com/" title="sass url">Sass</a> sera utilisé systématiquement, et ce encore longtemps, pour combler les limites parfois frustrantes du langage CSS.</p>
+  <p>Même si l'évolution de ce dernier est lente, elle est réelle, et on prendra garde à ne plus utiliser sass lorsque le CSS natif suffit.</p>
+
+  <h3>PostCSS</h3>
+  <p><a href="https://preset-env.cssdb.org/" title="postcss-preset-env url">postcss-preset-env</a> (anciennement postcss-cssnext), grosse boîte à outils, modifie les styles avec une couche de JS.
+    Il nécessite des plugins, dont l'intéret de chacun dépendra du projet. Ils permettent d'utiliser dès aujourd'hui des propriétés css qui ne sont pas encore reconnues par (tous) les navigateurs
+  du moment (basé sur les rapports de <a href="https://caniuse.com/#info_about" title="Can I use url">Can I use</a>), en ajoutant les pollyfills nécessaires.</p>
+  <p>Par défaut, <a href="https://github.com/postcss/autoprefixer" title="autoprefixer url">autoprefixer</a> (qui ajoute des préfixes vendeurs aux propriétés CSS qui en ont besoin) est aujourd'hui inclus.</p>
+  <p>Attention de ne pas ajouter un plugin pour des fonctionnalités déjà présentes via Sass. Pour les plus complémentaires :</p>
+  <ul>
+    <li><a href="https://github.com/postcss/postcss-custom-media" title="PostCSS Custom Media url">Custom media queries</a> : utilisation de variables pour les media-queries.</li>
+    <li><a href="https://github.com/postcss/postcss-custom-properties" title="Custom properties Github url">Custom properties</a> : support des variables CSS natives.</li>
+    <li><a href="https://github.com/jonathantneal/postcss-image-set-function" title="Image set Github url">Image-set() function</a> : changer la source d'un background-image en fonction de la résolution.</li>
+  </ul>
+
+  <h2>Reset CSS</h2>
+  <p>Le but premier des fichiers de reset CSS était d'uniformiser les styles par défaut des navigateurs.</p>
+  <p>Ceux-ci étant de plus en plus similaires, on les utilise surtout comme des déclarations globales, qui vont rendre nos éléments plus rapides à coder, plus maintenables, et davantage conformes aux bonnes pratiques.</p>
+
+  <h3><a href="https://meyerweb.com/eric/tools/css/reset/reset.css" title="Eric Meyer website">Reset css</a> d'Eric Meyer.</h3>
+  <h4>La manière brutale</h4>
+  <p>On uniformise en mettant tout à zéro.</p>
+  <p>Avantages : on se déleste de tous les styles parasites, comme les marges internes sur les listes.</p>
+  <p>Inconvénients : il n'y a plus de style par défaut, tout élément présent sur le projet doit être travaillé.</p>
+
+  <h3><a href="http://necolas.github.io/normalize.css/" title="Normalize website">Normalize</a></h3>
+  <h4>La manière douce</h4>
+  <p>On préserve la majorité des styles par défaut, en les uniformisant si besoin.</p>
+  <p>Avantages : le site est rapidement présentable.</p>
+  <p>Inconvénients : tous les éléments auront des styles par défaut, lesquels seront forcément différents de ceux requis par son projet.
+    Le risque est plus grand d'oublier de styler un élément mais si c'est le cas, le résultat sera moins choquant qu'avec le reset de Meyer.</p>
+
+  <h3>Reboot</h3>
+  <h4>La manière intelligente</h4>
+  <p>On uniformise les styles par défaut des navigateurs, et on en ajoute de nouveaux.</p>
+  <p><a href="https://github.com/twbs/bootstrap/blob/v4-dev/scss/_reboot.scss" title="">Reboot</a> est un concept Bootstrap, mais rien n'empêche de s'en inspirer.
+  Il reprend les fondamentaux de <a href="http://necolas.github.io/normalize.css/" title="Normalize website">Normalize</a>, en personnalisant certains éléments (ajout de la gestion du
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing">box-sizing</a>, etc), et en remettant à zéro certaines propriétés CSS (margin-top des titres...), comme le reset CSS originel.</p>
+
+  <p>Exemple de fichier reboot personnalisé :</p>
+
+  <div class="js-accordion">
+    <button>Voir le code</button>
+    <pre>
+
+    <code>
+      /*
+     ********************************************************** DOCUMENT **********************************************************
+     */
+
+    /**
+     * Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
+     */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-family: sans-serif; // Change the default font family in all browsers.
+      font-size: 62.5%; // We need a base font-size in %
+      -webkit-text-size-adjust: 100%; // Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.
+      -ms-text-size-adjust: 100%;
+      -ms-overflow-style: scrollbar; // Setting @viewport causes scrollbars to overlap content in IE11 and Edge, so
+      //    we force a non-overlapping, non-auto-hiding scrollbar to counteract.
+      -webkit-tap-highlight-color: rgba(black, 0); // Change the default tap highlight to be completely transparent in iOS.
+    }
+
+    // IE10+ doesn't honor `<meta name="viewport">` in some cases.
+    @at-root {
+      @-ms-viewport {
+        width: device-width;
+      }
+    }
+
+    /*
+     ********************************************************** BODY **********************************************************
+     */
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0; // Remove the margin in all browsers
+      font-size: 1.2rem;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+      text-align: left; // Set an explicit initial text-align value so that we can later use the
+      // the `inherit` value on things like `<th>` elements
+    }
+
+    /*
+     * Suppress the focus outline on elements that cannot be accessed via keyboard.
+     * This prevents an unwanted focus outline from appearing around elements that
+     * might still respond to pointer events.
+     * Credit: https://github.com/suitcss/base
+    */
+    [tabindex="-1"]:focus {
+      outline: 0 !important;
+    }
+
+
+    /*
+     ********************************************************** TYPOGRAPHY **********************************************************
+     */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 0;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+
+    /**
+    * Don't decorate links by default
+    */
+    a {
+      text-decoration: none;
+      background-color: transparent; // Remove the gray background on active links in IE 10.
+    }
+
+    :focus {
+      outline: 1px dotted grey;
+    }
+
+    ul,
+    ol,
+    li,
+    dl {
+      margin: 0;
+      padding: 0;
+    }
+
+    ol ol,
+    ul ul,
+    ol ul,
+    ul ol {
+      margin-bottom: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    address {
+      font-style: normal;
+      line-height: inherit;
+    }
+
+    blockquote {
+      margin: 0 0;
+    }
+
+    dfn {
+      font-style: italic; // Add the correct font style in Android 4.3-
+    }
+
+    b,
+    strong {
+      font-weight: bolder; // Add the correct font weight in Chrome, Edge, and Safari
+    }
+
+    abbr[title] {
+      text-decoration: underline dotted; // Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+      cursor: help; // Add explicit cursor to indicate changed behavior.
+      border-bottom: 0; // Remove the bottom border in Firefox 39-.
+    }
+
+    pre {
+      margin-top: 0;
+      overflow: auto;
+      // We have @viewport set which causes scrollbars to overlap content in IE11 and Edge, so
+      // we force a non-overlapping, non-auto-hiding scrollbar to counteract.
+      -ms-overflow-style: scrollbar;
+    }
+
+    /*
+     ********************************************************** MEDIAS **********************************************************
+     */
+
+    img, embed, object, video {
+      max-width: 100%;
+    }
+
+    img {
+      display: inline-block;
+      height: auto;
+      vertical-align: middle;
+      border-style: none; // Remove the border on images inside links in IE 10-.
+    }
+
+    svg {
+      // Workaround for the SVG overflow bug in IE10/11 is still required.
+      overflow: hidden;
+      vertical-align: middle;
+    }
+
+    path {
+      vector-effect: non-scaling-stroke;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    /*
+     ********************************************************** TABLES **********************************************************
+     */
+
+    table {
+      border-collapse: collapse; // Prevent double borders
+    }
+
+    caption {
+      text-align: left;
+      caption-side: bottom;
+    }
+
+    th {
+      // Matches default `<td>` alignment by inheriting from the `<body>`, or the
+      // closest parent with a set `text-align`.
+      text-align: inherit;
+    }
+
+    /*
+     ********************************************************** FORMS **********************************************************
+     */
+
+    label {
+      display: inline-block;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    // Work around a Firefox/IE bug where the transparent `button` background
+    // results in a loss of the default `button` focus styles.
+    //
+    // Credit: https://github.com/suitcss/base/
+    button:focus {
+      outline: 1px dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+    }
+
+    input,
+    button,
+    select,
+    optgroup,
+    textarea {
+      margin: 0; // Remove the margin in Firefox and Safari
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    button,
+    input {
+      overflow: visible; // Show the overflow in Edge
+    }
+
+    button,
+    select {
+      text-transform: none; // Remove the inheritance of text transform in Firefox
+    }
+
+    button,
+    html [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      -webkit-appearance: button; // Correct the inability to style clickable types in iOS and Safari.
+    }
+
+    // Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
+    button::-moz-focus-inner,
+    [type="button"]::-moz-focus-inner,
+    [type="reset"]::-moz-focus-inner,
+    [type="submit"]::-moz-focus-inner {
+      padding: 0;
+      border-style: none;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
+      padding: 0; // 2. Remove the padding in IE 10-
+    }
+
+
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"] {
+      // Remove the default appearance of temporal inputs to avoid a Mobile Safari
+      // bug where setting a custom line-height prevents text from being vertically
+      // centered within the input.
+      // See https://bugs.webkit.org/show_bug.cgi?id=139848
+      // and https://github.com/twbs/bootstrap/issues/11266
+      -webkit-appearance: listbox;
+    }
+
+    textarea {
+      overflow: auto; // Remove the default vertical scrollbar in IE.
+      // Textareas should really only resize vertically so they don't break their (horizontal) containers.
+      resize: vertical;
+    }
+
+    fieldset {
+      // Browsers set a default `min-width: min-content;` on fieldsets,
+      // unlike e.g. `div`s, which have `min-width: 0;` by default.
+      // So we reset that to ensure fieldsets behave more like a standard block element.
+      // See https://github.com/twbs/bootstrap/issues/12359
+      // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+      min-width: 0;
+      // Reset the default outline behavior of fieldsets so they don't affect page layout.
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    legend {
+      display: block;
+      width: 100%;
+      max-width: 100%; // Correct the text wrapping in Edge and IE.
+      padding: 0;
+      line-height: inherit;
+      color: inherit; // Correct the color inheritance from `fieldset` elements in IE.
+      white-space: normal; // Correct the text wrapping in Edge and IE.
+    }
+
+    progress {
+      vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
+    }
+
+    // Correct the cursor style of increment and decrement buttons in Chrome.
+    [type="number"]::-webkit-inner-spin-button,
+    [type="number"]::-webkit-outer-spin-button {
+      height: auto;
+    }
+
+    [type="search"] {
+      // This overrides the extra rounded corners on search inputs in iOS so that our
+      // `.form-control` class can properly style them. Note that this cannot simply
+      // be added to `.form-control` as it's not specific enough. For details, see
+      // https://github.com/twbs/bootstrap/issues/11586.
+      outline-offset: -2px; // 2. Correct the outline style in Safari.
+      -webkit-appearance: none;
+    }
+
+    //
+    // Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+    //
+
+    [type="search"]::-webkit-search-cancel-button,
+    [type="search"]::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    ::-webkit-file-upload-button {
+      font: inherit; // Change font properties to `inherit` in Safari.
+      -webkit-appearance: button; // Correct the inability to style clickable types in iOS and Safari.
+    }
+
+    /**
+     * Removes cross icon for input fields, in ie11+ browsers
+     */
+    [type='input']::-ms-clear {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    //
+    // Correct element displays
+    //
+
+    output {
+      display: inline-block;
+    }
+
+    summary {
+      display: list-item; // Add the correct display in all browsers
+      cursor: pointer;
+    }
+
+    template {
+      display: none; // Add the correct display in IE
+    }
+
+    // Always hide an element with the `hidden` HTML attribute (from PureCSS).
+    // Needed for proper display in IE 10-.
+    [hidden] {
+      display: none !important;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font-family: inherit;
+      -webkit-transform: translate3d(0, 0, 0); //fix iphone
+      border-radius: 0; //reset for chrome
+    }
+
+    //16px default value for form fields, so the iphone won't zoom on focus.
+    input[type='color'],
+    input[type='date'],
+    input[type='datetime'],
+    input[type='datetime-local'],
+    input[type='email'],
+    input[type='month'],
+    input[type='number'],
+    input[type='password'],
+    input[type='search'],
+    input[type='tel'],
+    input[type='text'],
+    input[type='time'],
+    input[type='url'],
+    input[type='week'],
+    select:focus,
+    textarea {
+      font-size: 1.6rem;
+    }
+
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+      </code>
+    </pre>
+  </div>
+
+  <h2>Règles globales</h2>
+
+  <h3>Mobile First</h3>
+  <p>Pour des raisons essentielles de performances, le code CSS ciblera en priorité la version mobile du site.
+    Les media-queries ne seront utilisées que pour les versions plus larges (tablette, desktop...).</p>
+
+  <h3>Structure en flexbox</h3>
+  <p>En attendant une reconnaissance complète des <a href="https://caniuse.com/#feat=css-grid" title="caniuse url">Grilles CSS</a>, une mise en page en
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/Disposition_flexbox_CSS/Utilisation_des_flexbox_en_CSS" title="Flexbox doc"></a>Flexbox reste
+    la plus solide, et la plus à même des gérer de façon responsive les pieds-de-page.</p>
+
+  <h2>Import des polices</h2>
+
+  <p>Deux ou trois polices principales devraient se dégager du projet. On utilisera des variables, et les declinera en fonction de leur graisse et de leur oblicité.</p>
+
+  <div class="js-accordion">
+    <button>Voir le code</button>
+  <pre>
+    <code>
+$mainFont-font-face: 'my webfont';
+$secondaryFont-font-face: 'my other webfont';
+
+$mainFont: $mainFont-font-face, Arial, sans-serif;
+$secondaryFont: $secondaryFont-font-face, Verdana, serif;
+
+//My main webfont Regular
+@font-face {
+  font-family: $mainFont-font-face;
+  font-style: normal;
+  font-weight: normal;
+  src: url('path-to-my-font/myWebfont.woff') format('woff'),
+    url('path-to-my-font/myWebfont.woff2') format('woff2');
+}
+
+//My main webfont Bold
+@font-face {
+  font-family: $mainFont-font-face;
+  font-style: normal;
+  font-weight: bold;
+  src: url('path-to-my-font/myWebfont-bold.woff') format('woff'),
+    url('path-to-my-font/myWebfont-bold.woff2') format('woff2');
+}
+      </code>
+    </pre>
+  </div>
+
+  Dans l'exemple suivant, c'est la police myWebfont-bold qui sera appelée :
+  <pre>
+    <code>
+div {
+  font-family: $mainFont;
+  font-weight: bold;
+}
+    </code>
+  </pre>
+
+  <h2>Gestion des icones</h2>
+  <p>Les pictos du projet seront appelés soit ponctuellement, via l'import de fichiers svg, soit à l'aide d'une font-icon.</p>
+  <p>Celle-ci sera créée avec le module <a href="https://github.com/sunflowerdeath/webfonts-generator">webfonts-generator</a>.</p>
+  <p>Exemple de configuration :</p>
+  <pre>
+    <code>
+webfontsGenerator({
+  files: [
+    'src/assets/icons/apple.svg',
+    'src/assets/icons/city.svg',
+  ],
+  dest: 'src/assets/fonts',
+  fontName: 'myIconFont',
+  types: ['woff2', 'woff'],
+  cssDest: path.join('src/vendors', '_webFontsGenerator' + '.scss'),
+  cssFontsPath: '../assets/fonts'
+}, function(error) {
+  if (error) {
+    console.log('Fail!', error);
+  } else {
+    console.log('Done!');
+  }
+});
+    </code>
+  </pre>
+  <p>On ajoute ensuite les classes correspondant au nom des fichiers SVG utilisés :</p>
+  <pre>
+    <code class="html">
+&lt;span class="icon icon-apple"&gt;Mon icone&lt;/span&gt;
+    </code>
+  </pre>
+  <p>Ou même plus simple...</p>
+  <pre>
+    <code>
+&lt;span class="icon-apple"&gt;Mon icone&lt;/span&gt;
+    </code>
+  </pre>
+  <p>...si on a pris soin de personnaliser notre feuille de style comme ceci :</p>
+  <pre>
+    <code>
+[class*='icon-']::before {
+  font-family: myIconFont;
+  font-style: normal;
+  font-weight: normal;
+  vertical-align: top;
+}
+    </code>
+  </pre>
+  <p>avec pour résultat :</p>
+  <p class="icon-apple">Mon icone</p>
+  <p>L'icone est générée dans le pseudo-element <a href="https://developer.mozilla.org/fr/docs/Web/CSS/::before" title="description of befoe pseudo-element">before</a>.</p>
+
+  <h2 id="#spaces">Gestion des espaces blancs</h2>
+  <p>Toutes les marges et paddings du site utiliseront des variables prédéfinies.</p>
+  <p>On peut utiliser n'importe quelles valeurs approuvées par la charte, mais l'idée est de respecter est de créer une progression régulière entre elles.</p>
+  <p>Exemple :</p>
+  <pre>
+    <code>
+$space-xs: 4px;
+$space-s: 8px;
+$space-m: 16px;
+$space-l: 32px;
+$space-xl: 64px;
+    </code>
+  </pre>
+
+  <h2>Marges verticales</h2>
+  <p>Dans la mesure du possible, pour rendre l'espacement entre les blocs plus homogène et éviter des fusions de marges, les propriétés
+    <a href="https://developer.mozilla.org/fr/docs/Web/CSS/margin-top" title="Définition margin-top">margin-top</a> seront évitées, et redéfinies à zéro si elles sont présentes par défaut (titles..).</p>
+
+  <h2>Gestion des z-index</h2>
+  <p>Pour gérer un maximum de cas de figures avec le minimum de risques, sans tomber dans la surenchère des valeurs, on utilisera des palliers de variables explicites.</p>
+  <p>Exemple :</p>
+  <ul>
+    <li>$loader: 30;</li>
+    <li>$cookies: 25;</li>
+    <li>$modals: 20;</li>
+    <li>$header: 15;</li>
+    <li>$tooltips: 10;</li>
+  </ul>
+  <p>Ainsi, lorsqu'on souhaite qu'un élément en absolu se positionne toujours au dessus du header, mais en dessous des modals, on peut lui attribuer :</p>
+  <pre>
+    <code>
+      z-index: $header + 1;
+    </code>
+  </pre>
+
+  <h2>Mixins génériques</h2>
+  <p>Bibliothèque de mixins utiles (beaucoup d'autres idées (plus ou moins) pertinentes <a href="http://play.csssecrets.io/" target="_blank" title="link to csssecrets">ici</a>).</p>
+
+  <h3>Elément invisible mais accessible :</h3>
+  <pre>
+    <code>
+/**
+ * Hides wording while keeping it accessible
+ */
+@mixin accessible-invisibility {
+  position: absolute !important;
+  width: 1px;
+  height: 1px; /* stylelint-disable-line declaration-property-unit-whitelist */
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+    </code>
+  </pre>
+
+  <h3>Elément en position absolue centré :</h3>
+  <pre>
+    <code>
+@mixin center-horizontally {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin center-vertically {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin center-both {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+    </code>
+  </pre>
+
+  <div class="u-exemple centerContainer">
+    <div class="centerContent"></div>
+  </div>
+
+  <h3>Grille de blocs équidistants :</h3>
+  <pre>
+    <code>
+/**
+ * Creates a grid with elements equally positionned horizontaly and vertically
+ * Declare the number of elements by line, and the size of the margin between each one
+ */
+@mixin grid($number, $margin) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$margin;
+
+  > * {
+    width: calc((100% / #{$number}) - (#{$margin}));
+    margin: 0 $margin $margin 0;
+  }
+}
+
+    </code>
+  </pre>
+
+  <ul class="u-exemple grid">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <h3>Lien animé :</h3>
+<pre>
+  <code>
+@mixin animated-link($color: black, $padding: 0, $focus: false) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: $padding;
+    width: 0;
+    height: 1px; /* stylelint-disable-line declaration-property-unit-whitelist */
+    transition: .2s all;
+    background-color: $color;
+    content: '';
+  }
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    //only ie10+ will understand those rules
+    &::after {
+      transition: none;
+    }
+  }
+
+  @if $focus == false {
+    $focus: '&:hover';
+  }
+
+  @else {
+    $focus: '&:focus, &:hover';
+  }
+
+  #{$focus} {
+    &::after {
+      @if (unitless($padding)) {
+        width: 100%;
+      }
+
+      @else {
+        width: calc(100% - (#{$padding} * 2));
+      }
+      // but no transition on ie11 with calc...
+      // When animation is really needed, replace paddings of the link with margins
+    }
+  }
+}
+  </code>
+</pre>
+
+  <div class="u-exemple animatedLink__wrapper">
+    <a class="animatedLink" href="#">Mon lien animé</a>
+  </div>
+
+  <h3>Elément prenant 100% de largeur du navigateur (dans un contexte plus étroit) :</h3>
+  <pre>
+    <code>
+/* Gives a block a width of 100% of the viewport, bringing it out of its container */
+
+@mixin fullWidth {
+  $size-desktop-screen: 1280px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  > * {
+    max-width: $size-desktop-screen;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+    </code>
+  </pre>
+
+  <div class="u-exemple fullWidth">
+    <div></div>
+  </div>
+
+  <h3>Eléments en cercle :</h3>
+  <pre>
+    <code>
+/// Mixin to place items on a circle
+/// @author Hugo Giraudel
+/// @author Ana Tudor
+/// @param {Integer} $item-count - Number of items on the circle
+/// @param {Length} $circle-size - Large circle size
+/// @param {Length} $item-size - Single item size
+@mixin on-circle($item-count, $circle-size, $item-size) {
+  position: relative;
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+
+  > * {
+    display: block;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin: -($item-size / 2);
+
+    $angle: (360 / $item-count);
+    $rot: 0;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform:
+          rotate($rot * 1deg)
+          translate($circle-size / 2)
+          rotate($rot * -1deg);
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+    </code>
+  </pre>
+  
+  <ul class="u-exemple circle">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <h2>Mixins spécifiques</h2>
+  <p>Les mixins ne sont pas seulement utiles pour s'épargner des répétitions de code, mais aussi pour s'assurer l'homogénéité des éléments semblables.</p>
+  <p>Ci-dessous quelques exemples. Ne pas hésiter à en créer d'autres en fonction des besoins, dès qu'un détail graphique est répété.</p>
+  <h3>Marges entre les blocs :</h3>
+  <pre>
+    <code>
+//adds left and right margins to a block, first child of the main content
+@mixin block-layout-horizontal {
+  margin-right: $space-s;
+  margin-left: $space-s;
+
+  @media (--tablet) {
+    margin-right: $space-m;
+    margin-left: $space-m;
+  }
+
+ @media (--desktop) {
+    margin-right: $space-l;
+    margin-left: $space-l;
+  }
+}
+
+//add bottom margin to any block in the main flow
+@mixin block-layout-vertical {
+  margin-bottom: $space-m;
+
+  @media (--tablet) {
+    margin-bottom: $space-l;
+  }
+
+  @media (--desktop) {
+    margin-bottom: $space-xl;
+  }
+}
+    </code>
+  </pre>
+
+  <h3>Ombres :</h3>
+  <pre>
+    <code>
+/**
+ * adds shadow on top edge of a block
+ */
+@mixin block-shadow {
+  box-shadow: 0 4px * -1 8px 0 grey;
+}
+
+/**
+* add dark shadow blur to the block
+*/
+@mixin block-shadow-dark {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+
+/**
+* add shadow on bottom edges of a block
+*/
+@mixin block-shadow-bottom {
+  box-shadow: 0 0 8px 0 grey;
+}
+
+/**
+* add shadow on every edge
+*/
+@mixin block-shadow-box {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
+}
+
+    </code>
+  </pre>
+
+</main>
+
+<script src="public/bundle.js"></script>
+
+</body>
+</html>

@@ -14,11 +14,6 @@ node_modules
 # Prevent npm 5 lockfile
 package-lock.json
 
-# Ignore public files
-# public
-public/bundle.js
-public/styles.css
-
 # IDEs
 .idea
 
